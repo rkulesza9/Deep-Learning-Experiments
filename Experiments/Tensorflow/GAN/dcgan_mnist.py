@@ -143,8 +143,13 @@ class MNIST_DCGAN(object):
 
         self.x_train = input_data.read_data_sets("mnist",\
         	one_hot=True).train.images
+
+        print("dimensions before reshape: ",self.x_train.shape)
+
         self.x_train = self.x_train.reshape(-1, self.img_rows,\
         	self.img_cols, 1).astype(np.float32)
+
+        print("dimensions after reshape:",self.x_train.shape)
 
         self.DCGAN = DCGAN()
         self.discriminator =  self.DCGAN.discriminator_model()
@@ -204,8 +209,8 @@ class MNIST_DCGAN(object):
 
 if __name__ == '__main__':
     mnist_dcgan = MNIST_DCGAN()
-    timer = ElapsedTimer()
-    mnist_dcgan.train(train_steps=10000, batch_size=256, save_interval=500)
-    timer.elapsed_time()
-    mnist_dcgan.plot_images(fake=True)
-    mnist_dcgan.plot_images(fake=False, save2file=True)
+    # timer = ElapsedTimer()
+    # mnist_dcgan.train(train_steps=10000, batch_size=256, save_interval=500)
+    # timer.elapsed_time()
+    # mnist_dcgan.plot_images(fake=True)
+    # mnist_dcgan.plot_images(fake=False, save2file=True)
