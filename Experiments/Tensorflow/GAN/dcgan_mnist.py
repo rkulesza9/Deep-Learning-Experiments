@@ -8,7 +8,7 @@ Usage: python3 dcgan_mnist.py
 
 import numpy as np
 import time
-from tensorflow.examples.tutorials.mnist import input_data
+import tensorflow_datasets as tfds
 
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Flatten, Reshape
@@ -141,8 +141,13 @@ class MNIST_DCGAN(object):
         self.img_cols = 28
         self.channel = 1
 
-        self.x_train = input_data.read_data_sets("mnist",\
-        	one_hot=True).train.images
+        self.x_train = tfds.load(name="mnist", split=tfds.Split.TRAIN).take(5)
+        self.x_train = tfds.as_numpy(self.x_train)
+
+        self.x_train = [img["image"] for img in self.x_train]
+        self.x_train = np.array(self.x_train)
+
+        # useful for next step -> creating DCGAN for compounds
         self.x_train = self.x_train.reshape(-1, self.img_rows,\
         	self.img_cols, 1).astype(np.float32)
 
